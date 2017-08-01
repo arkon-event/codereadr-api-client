@@ -81,11 +81,19 @@ class Client
 
     public const ACTION_AVAILABLE = 'available';
 
+    public const ACTION_ADD_QUESTION = 'addquestion';
+
+    public const ACTION_REMOVE_QUESTION = 'removequestion';
+
+    public const ACTION_ADD_USER_PERMISSION = 'adduserpermission';
+
+    public const ACTION_REVOKE_USER_PERMISSION = 'revokeuserpermission';
+
     /**
-     * 
-     * @param string $apiKey
-     * @param LoggerInterface $logger
-     * @param HttpClient $httpClient
+     *
+     * @param string $apiKey            
+     * @param LoggerInterface $logger            
+     * @param HttpClient $httpClient            
      */
     public function __construct(string $apiKey, LoggerInterface $logger = null, HttpClient $httpClient = null)
     {
