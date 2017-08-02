@@ -89,6 +89,8 @@ class Client
 
     public const ACTION_REVOKE_USER_PERMISSION = 'revokeuserpermission';
 
+    public const API_TIME_ZONE = 'America/New_York';
+
     /**
      *
      * @param string $apiKey            
