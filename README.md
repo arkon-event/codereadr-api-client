@@ -1,7 +1,7 @@
 # codereadr API client
 PHP client for interacting with CodeReadr API. See https://www.codereadr.com/apidocs/ for details. 
 
-Note that this package requires PHP 7.1.
+Note that this package (as of v2) requires PHP 7.2
 
 ```php
 <?php
