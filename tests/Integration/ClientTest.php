@@ -1,9 +1,11 @@
 <?php
+
 namespace ArkonEvent\CodeReadr\Tests\Integration;
 
 use ArkonEvent\CodeReadr\ApiClient\Client;
+use PHPUnit\Framework\TestCase;
 
-class ClientTest extends \PHPUnit\Framework\TestCase
+class ClientTest extends TestCase
 {
 
     /**
@@ -14,7 +16,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
 
     /**
      *
-     * @var \ArkonEvent\CodeReadr\ApiClient\Client
+     * @var Client
      */
     protected $client;
 
@@ -33,13 +35,13 @@ class ClientTest extends \PHPUnit\Framework\TestCase
     public function testGetUsers()
     {
         $xml = $this->client->request(Client::SECTION_USERS, Client::ACTION_RETREIVE);
-         
-        $this->assertEquals(1, (int) $xml->status);
+
+        $this->assertEquals(1, (int)$xml->status);
     }
 
     public function testInvalidSection()
     {
         $this->expectException('\ArkonEvent\CodeReadr\Exceptions\CodeReadrApiException');
-        $response = $this->client->request('fsdfds', Client::ACTION_RETREIVE);
+        $this->client->request('fsdfds', Client::ACTION_RETREIVE);
     }
 }

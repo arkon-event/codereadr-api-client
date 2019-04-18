@@ -4,6 +4,7 @@ namespace ArkonEvent\CodeReadr\ApiClient;
 use Http\Discovery\HttpClientDiscovery;
 use Http\Discovery\MessageFactoryDiscovery;
 use Http\Client\HttpClient;
+use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Message\MessageFactory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
@@ -92,12 +93,12 @@ class Client
     public const API_TIME_ZONE = 'America/New_York';
 
     /**
-     *
-     * @param string $apiKey            
-     * @param LoggerInterface $logger            
-     * @param HttpClient $httpClient            
+     * Client constructor.
+     * @param string $apiKey
+     * @param LoggerInterface|null $logger
+     * @param HttpClient|null $httpClient
      */
-    public function __construct(string $apiKey, LoggerInterface $logger = null, HttpClient $httpClient = null)
+    public function __construct(string $apiKey, ?LoggerInterface $logger = null, ?HttpClient $httpClient = null)
     {
         $this->apiKey = $apiKey;
         $this->setLogger($logger);
@@ -107,11 +108,12 @@ class Client
     /**
      * Execute a request against the CodeReadr API, this method will throw a CodeReadrApiException if an error is returned from the API (as opposed to the API behaviour which returns 200 regardless)
      *
-     * @param string $section            
-     * @param string $action            
-     * @param array $params            
-     * @throws CodeReadrApiException
+     * @param string $section
+     * @param string $action
+     * @param array $params
      * @return \SimpleXMLElement
+     * @throws CodeReadrApiException
+     * @throws \Http\Client\Exception
      */
     public function request(string $section, string $action, array $params = []): \SimpleXMLElement
     {
@@ -144,7 +146,7 @@ class Client
      *
      * @param HttpClient $httpClient            
      */
-    public function setHttpClient(HttpClient $httpClient = null): void
+    public function setHttpClient(?HttpClient $httpClient = null): void
     {
         if (is_null($httpClient)) {
             $this->httpClient = HttpClientDiscovery::find();
@@ -157,10 +159,9 @@ class Client
     }
 
     /**
-     *
-     * @param LoggerInterface $logger            
+     * @param LoggerInterface|null $logger
      */
-    public function setLogger(LoggerInterface $logger = null): void
+    public function setLogger(?LoggerInterface $logger = null): void
     {
         $this->logger = $logger;
     }
@@ -173,9 +174,10 @@ class Client
     protected function getMessageFactory(): MessageFactory
     {
         if (is_null($this->messageFactory)) {
+            //@todo upgrade to Psr17FactoryDiscovery
             $this->messageFactory = MessageFactoryDiscovery::find();
         }
-        
+
         return $this->messageFactory;
     }
 }
